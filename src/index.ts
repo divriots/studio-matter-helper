@@ -1,10 +1,9 @@
 function parseMatter(s: string): any {
-  if (s.trim().startsWith("{")) {
-    // JSON
+  if (s.trim().startsWith('{')) {
     return JSON.parse(s);
   }
-  // TODO support YAML
-  return {};
+  const YAML = require('yamljs');
+  return YAML.parse(s);
 }
 
 const matter = (
@@ -20,7 +19,7 @@ const matter = (
       return { data, content: slicedContent };
     } catch (e) {
       return {
-        content: ["```js", e.toString(), "```", content].join("\n"),
+        content: ['```js', e.toString(), '```', content].join('\n'),
       };
     }
   }
@@ -28,9 +27,9 @@ const matter = (
 };
 
 const matterRegexp = (begin: string, end: string): RegExp =>
-  new RegExp(`^${begin}(?:json)?(?=\\n)(.*?)\\n${end}\\n`, "s");
+  new RegExp(`^${begin}(?:json)?(?=\\n)(.*?)\\n${end}\\n`, 's');
 
 export const matterHTML = (content: string): { data?: any; content: string } =>
-  matter(content, matterRegexp("<!--", "-->"));
+  matter(content, matterRegexp('<!--', '-->'));
 export const matterMD = (content: string): { data?: any; content: string } =>
-  matter(content, matterRegexp("---", "---"));
+  matter(content, matterRegexp('---', '---'));
