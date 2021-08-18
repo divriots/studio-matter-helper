@@ -1,9 +1,10 @@
+import yamljs from 'yamljs';
+
 function parseMatter(s: string): any {
   if (s.trim().startsWith('{')) {
     return JSON.parse(s);
   }
-  const YAML = require('yamljs');
-  return YAML.parse(s);
+  return yamljs.parse(s);
 }
 
 const matter = (
